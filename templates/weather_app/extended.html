@@ -1,0 +1,31 @@
+{% extends 'weather_app/base.html' %}
+
+{% block content %}
+
+    <h2 style="text-align: center">
+    </h2>
+
+
+    <div class="row">
+        {% for period in forecast %}
+        <div class="col s3 m4">
+            <div class="card small blue darken-3 valign-wrapper">
+                <div class="center white-text "> 
+  
+                    <img class="responsive-img" src={{ period.3 }} alt ={{ period.4 }}>
+                    <div class="card-content">                    
+                        <p>{{ period.2 }}</p> 
+                        <p>{{ period.4 }}</p> 
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+   
+
+
+{% endblock content %}
