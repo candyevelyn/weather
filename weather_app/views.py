@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from . import models
 
 BASE_URL='https://forecast.weather.gov/MapClick.php?lat=38.890370000000075&lon=-77.03195999999997#.XbDQK5NKjrI'
+RADAR_URL ='https://radar.weather.gov/ridge/radar_lite.php?rid=LWX&product=N0R&loop=yes'
+
 
 # Create your views here.
 def home(request):
@@ -49,7 +51,6 @@ def current(request):
     for row in col:
         detail=row.find(class_="text-right")
         conditions_detail.append(detail.next_sibling.next_sibling.get_text())
-        print(conditions_detail)
 
     current_summary={
         'src': src,
@@ -65,4 +66,30 @@ def current(request):
     }
     return render(request, 'weather_app/current.html', current_summary)
 
-    
+def radar(request):
+    page = requests.get(RADAR_URL)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    image=soup.find(id="image0")
+    radar_image=image.find('img')
+    src='https://radar.weather.gov/'+radar_image['src']
+    print(src)
+    radar={
+        'src':src,
+    }
+
+    return render(request, 'weather_app/radar.html', radar)
+
+def discussion(request):
+    page = requests.get('https://forecast.weather.gov/product.php?site=LWX&issuedby=LWX&product=AFD&format=CI&version=1&glossary=1&highlight=off')
+    soup = BeautifulSoup(page.content, 'html.parser')
+    content= soup.find(id='proddiff')
+    content.span.decompose()
+    discussion=content.get_text()
+ 
+
+
+    text={
+        'text':discussion,
+    }
+
+    return render(request, 'weather_app/discussion.html', text)
