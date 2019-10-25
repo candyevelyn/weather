@@ -1,0 +1,60 @@
+{% extends 'weather_app/base.html' %}
+
+{% block content %}
+
+    <h2 class="grey-text text-darken-2" style="text-align: center"> 
+    Current Conditions
+    </h2>
+    
+    <div class="row">
+        <div class="col s12 m12 white-text container">
+            <div class="card blue darken-3 ">
+                <div class="card-content center valign-wrapper row">
+                    <div class="col s12 m6 ">
+                        <img src={{ src }}>    
+                        <h2>{{ conditions }}</h2>
+                        <h4>{{ temp_f }}</h4>                   
+                        <p>{{ temp_c }}</p>                     
+                    </div>
+                    <div class="col m6">
+                        <table class="white-text">
+                            <tbody >
+                                <tr>
+                                    <td><b>Last Updated</b></td>
+                                    <td>{{ last_update }}</td>
+                                </tr>        
+                                <tr>
+                                    <td><b>Humidity</b></td>
+                                    <td>{{ humidity }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Wind Speed</b></td>
+                                    <td>{{ wind_speed}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Barometer</b></td>
+                                    <td>{{ barometer }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Dewpoint</b></td>
+                                    <td>{{ dewpoint }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Visibility</b></td>
+                                    <td>{{ visibility }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                 
+                    </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+
+
+
+{% endblock content %}

@@ -23,6 +23,7 @@ def extended(request):
         img = forecast.find("img")
         src= 'https://forecast.weather.gov/'+ img['src']
         desc = img['title']
+        
 
         final_forecast.append((period, short_desc, temp, src, desc ))
 
@@ -31,3 +32,37 @@ def extended(request):
     }
     print(final_forecast)
     return render(request, 'weather_app/extended.html', forecast)
+
+
+def current(request):
+    page = requests.get(BASE_URL)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    current=soup.find(id="current_conditions-summary")
+    src='https://forecast.weather.gov/'+current.find("img")['src']
+    conditions=current.find(class_="myforecast-current").get_text()
+    temp_f= current.find(class_="myforecast-current-lrg").get_text()
+    temp_c=current.find(class_="myforecast-current-sm").get_text()
+    table=soup.find(id="current_conditions_detail")
+    col=table.find_all('tr')
+    conditions_detail=[]
+
+    for row in col:
+        detail=row.find(class_="text-right")
+        conditions_detail.append(detail.next_sibling.next_sibling.get_text())
+        print(conditions_detail)
+
+    current_summary={
+        'src': src,
+        'conditions': conditions,
+        'temp_f':temp_f,
+        'temp_c':temp_c,
+        'humidity':conditions_detail[0],
+        'wind_speed':conditions_detail[1],
+        'barometer':conditions_detail[2],
+        'dewpoint':conditions_detail[3],
+        'visibility':conditions_detail[4],
+        'last_update':conditions_detail[5],
+    }
+    return render(request, 'weather_app/current.html', current_summary)
+
+    

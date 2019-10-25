@@ -2,15 +2,14 @@
 
 {% block content %}
 
-    <h2 style="text-align: center">
+    <h2 class="grey-text text-darken-2" style="text-align: center"> 
+        Extended Forecast
     </h2>
-
-
     <div class="row">
         {% for period in forecast %}
-        <div class="col s3 m4">
-            <div class="card small blue darken-3 valign-wrapper">
-                <div class="center white-text "> 
+        <div class="col s12 m4 container">
+            <div class="card medium center blue darken-3 valign-wrapper">
+                <div class=" white-text "> 
   
                     <img class="responsive-img" src={{ period.3 }} alt ={{ period.4 }}>
                     <div class="card-content">                    
